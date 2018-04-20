@@ -15,8 +15,7 @@
         "url": "https://github.com/matticusau/sqlops-mssql-instance-insights"
     },
     "bugs": {
-        "url": "https://github.com/matticusau/sqlops-mssql-instance-insights/issues",
-        "email": "matt.lavery@outlook.com"
+        "url": "https://github.com/matticusau/sqlops-mssql-instance-insights/issues"
     },
     "engines": {
         "vscode": "^1.22.0",
