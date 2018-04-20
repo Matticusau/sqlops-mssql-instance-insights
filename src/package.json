@@ -2,7 +2,7 @@
     "name": "mssql-instance-insights",
     "displayName": "MSSQL Instance Insights",
     "description": "Sql Server Instance insights",
-    "version": "0.1.0-beta1",
+    "version": "0.2.0-beta1",
     "publisher": "matticusau",
     "license": "MIT",
     "author": {
