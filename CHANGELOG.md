@@ -1,12 +1,20 @@
 # Change Log
 
-All notable changes to the "sqlops-mssql-instance-insights" extension will be documented in this file.
-
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
+All notable changes to the "mssql-instance-insights" extension will be documented in this file. Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
 ## [Unreleased]
 
 - None
+
+## [0.2.0]
+
+### Added
+
+- VLFs widget
+
+### Changed
+
+- Minor documentation fixes for marketplace support
 
 ## [0.2.0-beta1]
 

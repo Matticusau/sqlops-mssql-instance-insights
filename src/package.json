@@ -2,7 +2,7 @@
     "name": "mssql-instance-insights",
     "displayName": "MSSQL Instance Insights",
     "description": "Sql Server Instance insights",
-    "version": "0.2.0-beta1",
+    "version": "0.2.0",
     "publisher": "matticusau",
     "license": "MIT",
     "author": {
@@ -193,6 +193,53 @@
                         "actions": null
                     }
                 }
+            },
+            {
+                "id": "mssql-instance-vlfs.insight",
+                "contrib": {
+                    "queryFile": "./sql/mssql-instance-vlfs.sql",
+                    "type": {
+                        "bar": {
+                            "dataDirection": "vertical",
+                            "dataType": "number",
+                            "legendPosition": "none",
+                            "labelFirstColumn": false,
+                            "columnsAsLabels": false
+                        }
+                    },
+                    "details": {
+                        "queryFile": "./sql/mssql-instance-vlfs-detail.sql",
+                        "label": {
+                            "icon": "database",
+                            "column": "DBName",
+                            "state": [
+                                {
+                                    "condition": {
+                                        "if": "greaterthan",
+                                        "greaterthan": "10000"
+                                    },
+                                    "color": "red"
+                                },
+                                {
+                                    "condition": {
+                                        "if": "greaterthan",
+                                        "greaterthan": "1000"
+                                    },
+                                    "color": "orange"
+                                },
+                                {
+                                    "condition": {
+                                        "if": "lessthan",
+                                        "lessthan": "999"
+                                    },
+                                    "color": "green"
+                                }
+                            ]
+                        },
+                        "value": "TotalVLFs",
+                        "actions": null
+                    }
+                }
             }
         ]
         ,
@@ -211,6 +258,16 @@
                             },
                             "widget": {
                                 "mssql-instance-waits.insight": {}
+                            }
+                        },
+                        {
+                            "name": "Virtual Log Files (VLFs)",
+                            "gridItemConfig": {
+                                "sizex": 2,
+                                "sizey": 1
+                            },
+                            "widget": {
+                                "mssql-instance-vlfs.insight": {}
                             }
                         },
                         {
