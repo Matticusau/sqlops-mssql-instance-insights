@@ -4,7 +4,7 @@ This collection of widgets are designed to provide insights into MSSQL Instance 
 
 Where possible all of these widgets will include more detail when you click *_Show Details_* from the widget menu.
 
-![Show details](../src/images/show-detail.png)
+<img src="https://raw.githubusercontent.com/Matticusau/sqlops-mssql-instance-insights/master/src/images/show-detail.png" alt="Show Details" />
 
 ## Installation
 
@@ -27,17 +27,17 @@ If you find any issues using these widgets on these supported SQL Server version
 
 When the extension is loaded it will add a Dashboard tab. You can edit your workspace settings in the *dashboard.server.tabs* section to include this on your specific projects.
 
-![mssql-instance-insights-tab.png](../src/images/mssql-instance-insights-tab.png)
+<img src="https://raw.githubusercontent.com/Matticusau/sqlops-mssql-instance-insights/master/src/images/mssql-instance-insights-tab.png" alt="mssql-instance-insights-tab.png" style="width:800px;" />
 
 ## mssql-instance-waits
 
 This Server Dashboard widget includes information on the top 10 waits for the SQL Instance. Information will be shown in the form of a bar chart.
 
-![mssql-instance-waits.png](../src/images/mssql-instance-waits.png)
+<img src="https://raw.githubusercontent.com/Matticusau/sqlops-mssql-instance-insights/master/src/images/mssql-instance-waits.png" alt="mssql-instance-waits.png" />
 
 You can access more information about the waits in the detailed fly-out displayed when you select "..." on the widget.
 
-![mssql-instance-waits-details.png](../src/images/mssql-instance-waits-details.png)
+<img src="https://raw.githubusercontent.com/Matticusau/sqlops-mssql-instance-insights/master/src/images/mssql-instance-waits-details.png" alt="mssql-instance-waits-details.png" />
 
 Credit for the query this widget is based on goes to [Paul Randal - Tell me where it hurts](https://www.sqlskills.com/blogs/paul/wait-statistics-or-please-tell-me-where-it-hurts/)
 
@@ -59,11 +59,11 @@ This Server Dashboard widget includes information on the number of VLfs per data
 
 This insight is ***not*** supported on Azure SQL Db.
 
-![mssql-instance-vlfs.png](../src/images/mssql-instance-vlfs.png)
+<img src="https://raw.githubusercontent.com/Matticusau/sqlops-mssql-instance-insights/master/src/images/mssql-instance-vlfs.png" alt="mssql-instance-vlfs.png" />
 
 You can access more information about the vlfs in the detailed fly-out displayed when you select "..." on the widget.
 
-![mssql-instance-vlfs-details.png](../src/images/mssql-instance-vlfs-details.png)
+<img src="https://raw.githubusercontent.com/Matticusau/sqlops-mssql-instance-insights/master/src/images/mssql-instance-vlfs-details.png" alt="mssql-instance-vlfs-details.png" />
 
 To enable this widget add the following json to either your user or workspace settings in the *dashboard.server.widgets* section.
 
@@ -81,11 +81,11 @@ To enable this widget add the following json to either your user or workspace se
 
 This Server Dashboard widget includes information on the general system performance captured by the Extended Events System Health Session for the SQL Instance. Information will be shown in the form of a line chart. If the System Health Session is stopped or the instance has been restarted will affect the amount of data available for this widget.
 
-![mssql-instance-xelsystem.png](../src/images/mssql-instance-xelsystem.png)
+<img src="https://raw.githubusercontent.com/Matticusau/sqlops-mssql-instance-insights/master/src/images/mssql-instance-xelsystem.png" alt="mssql-instance-xelsystem.png" />
 
 You can access more information in the detailed fly-out displayed when you select "..." on the widget.
 
-![mssql-instance-xelsystem-details.png](../src/images/mssql-instance-xelsystem-details.png)
+<img src="https://raw.githubusercontent.com/Matticusau/sqlops-mssql-instance-insights/master/src/images/mssql-instance-xelsystem-details.png" alt="mssql-instance-xelsystem-details.png" />
 
 Credit for the query this widget is based on goes to [troubleshootingsql.com](https://troubleshootingsql.com/2013/08/02/powerview-and-system-health-session-system/)
 
@@ -107,11 +107,11 @@ To enable this widget add the following json to either your user or workspace se
 
 This Server Dashboard widget includes information on the IO performance captured by the Extended Events System Health Session for the SQL Instance. Information will be shown in the form of a line chart. If the System Health Session is stopped or the instance has been restarted will affect the amount of data available for this widget.
 
-![mssql-instance-xelio.png](../src/images/mssql-instance-xelio2.png)
+<img src="https://raw.githubusercontent.com/Matticusau/sqlops-mssql-instance-insights/master/src/images/mssql-instance-xelio2.png" alt="mssql-instance-xelio2.png" />
 
 You can access more information in the detailed fly-out displayed when you select "..." on the widget.
 
-![mssql-instance-xelio-details.png](../src/images/mssql-instance-xelio-details.png)
+<img src="https://raw.githubusercontent.com/Matticusau/sqlops-mssql-instance-insights/master/src/images/mssql-instance-xelio-details.png" alt="mssql-instance-xelio-details.png" />
 
 Credit for the query this widget is based on goes to [troubleshootingsql.com](https://troubleshootingsql.com/2013/07/25/powerview-and-system-health-session-io-health/)
 
@@ -133,11 +133,11 @@ To enable this widget add the following json to either your user or workspace se
 
 This Server Dashboard widget includes information on the Memory performance captured by the Extended Events System Health Session for the SQL Instance. Information will be shown in the form of a line chart. If the System Health Session is stopped or the instance has been restarted will affect the amount of data available for this widget.
 
-![mssql-instance-xelmemory.png](../src/images/mssql-instance-xelmemory.png)
+<img src="https://raw.githubusercontent.com/Matticusau/sqlops-mssql-instance-insights/master/src/images/mssql-instance-xelmemory.png" alt="mssql-instance-xelmemory.png" />
 
 You can access more information in the detailed fly-out displayed when you select "..." on the widget.
 
-![mssql-instance-xelmemory-details.png](../src/images/mssql-instance-xelmemory-details.png)
+<img src="https://raw.githubusercontent.com/Matticusau/sqlops-mssql-instance-insights/master/src/images/mssql-instance-xelmemory-details.png" alt="mssql-instance-xelmemory-details.png" />
 
 Credit for the query this widget is based on goes to [troubleshootingsql.com](https://troubleshootingsql.com/2013/07/19/powerview-and-system-health-sessionsql-memory-health/)
 
