@@ -1,0 +1,399 @@
+{
+    "name": "mssql-instance-insights",
+    "displayName": "MSSQL Instance Insights",
+    "description": "Sql Server Instance insights",
+    "version": "0.2.3-beta1",
+    "publisher": "matticusau",
+    "license": "MIT",
+    "icon": "images/icon.png",
+    "homepage": "https://github.com/matticusau/sqlops-mssql-instance-insights",
+    "author": {
+        "email": "matt.lavery@outlook.com",
+        "name": "Matt Lavery",
+        "url": "http://www.matticus.net"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/matticusau/sqlops-mssql-instance-insights"
+    },
+    "bugs": {
+        "url": "https://github.com/matticusau/sqlops-mssql-instance-insights/issues"
+    },
+    "engines": {
+        "vscode": "^1.24.0",
+        "sqlops": "*"
+    },
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [
+        "onCommand:extension.sayHello",
+        "onCommand:extension.showCurrentConnection",
+        "*"
+    ],
+    "main": "./out/src/extension",
+    "contributes": {
+        "configuration": [],
+        "commands": [
+            {
+                "command": "extension.sayHello",
+                "title": "Hello World"
+            },
+            {
+                "command": "extension.showCurrentConnection",
+                "title": "Show Current Connection"
+            }
+        ],
+        "views": {},
+        "menus": {},
+        "dashboard.tabs": [
+            {
+                "id": "mssql-instance-insights.tab",
+                "title": "MSSQL Instance Insights",
+                "description": "SQL Server Instance insights and widgets",
+                "container": {
+                    "nav-section": [
+                        {
+                            "id": "activity-container",
+                            "title": "Instance Activity",
+                            "icon": {
+                                "light": "./out/src/media/line-chart-lightbg.svg",
+                                "dark": "./out/src/media/line-chart-darkbg.svg"
+                            },
+                            "container": {
+                                "activity-container": {}
+                            }
+                        },
+                        {
+                            "id": "health-container",
+                            "title": "Instance Health",
+                            "icon": {
+                                "light": "./out/src/media/heartbeat-lightbg.svg",
+                                "dark": "./out/src/media/heartbeat-darkbg.svg"
+                            },
+                            "container": {
+                                "health-container": {}
+                            }
+                        }
+                    ]
+                }
+            }
+        ],
+        "dashboard.insights": [
+            {
+                "id": "mssql-instance-waits.insight",
+                "contrib": {
+                    "queryFile": "./out/sql/mssql-instance-waits.sql",
+                    "type": {
+                        "horizontalBar": {
+                            "dataDirection": "vertical",
+                            "dataType": "number",
+                            "legendPosition": "none",
+                            "labelFirstColumn": false,
+                            "columnsAsLabels": false
+                        }
+                    },
+                    "details": {
+                        "queryFile": "./out/sql/mssql-instance-waits-detail.sql",
+                        "label": {
+                            "icon": "database",
+                            "column": "WaitType",
+                            "state": [
+                                {
+                                    "condition": {
+                                        "if": "greaterThan",
+                                        "equals": "80"
+                                    },
+                                    "color": "red"
+                                },
+                                {
+                                    "condition": {
+                                        "if": "greaterThan",
+                                        "equals": "40"
+                                    },
+                                    "color": "orange"
+                                },
+                                {
+                                    "condition": {
+                                        "if": "lessThanOrEquals",
+                                        "equals": "40"
+                                    },
+                                    "color": "green"
+                                }
+                            ]
+                        },
+                        "value": "Percentage",
+                        "actions": null
+                    }
+                }
+            },
+            {
+                "id": "mssql-instance-xelsystem.insight",
+                "contrib": {
+                    "queryFile": "./out/sql/mssql-instance-xelsystem.sql",
+                    "type": {
+                        "line": {
+                            "dataDirection": "vertical",
+                            "dataType": "number",
+                            "legendPosition": "bottom",
+                            "labelFirstColumn": false,
+                            "columnsAsLabels": true
+                        }
+                    },
+                    "details": {
+                        "queryFile": "./out/sql/mssql-instance-xelsystem.sql",
+                        "label": {
+                            "icon": "database",
+                            "column": "Event Time",
+                            "state": [
+                                {
+                                    "condition": {
+                                        "if": "greaterThan",
+                                        "equals": "0"
+                                    },
+                                    "color": "red"
+                                },
+                                {
+                                    "condition": {
+                                        "if": "equals",
+                                        "equals": "0"
+                                    },
+                                    "color": "green"
+                                }
+                            ]
+                        },
+                        "value": "Non Yields Reported",
+                        "actions": null
+                    }
+                }
+            },
+            {
+                "id": "mssql-instance-xelio.insight",
+                "contrib": {
+                    "queryFile": "./out/sql/mssql-instance-xelio.sql",
+                    "type": {
+                        "line": {
+                            "dataDirection": "vertical",
+                            "dataType": "number",
+                            "legendPosition": "bottom",
+                            "labelFirstColumn": false,
+                            "columnsAsLabels": true
+                        }
+                    },
+                    "details": {
+                        "queryFile": "./out/sql/mssql-instance-xelio.sql",
+                        "label": {
+                            "icon": "database",
+                            "column": "Event Time",
+                            "state": [
+                                {
+                                    "condition": {
+                                        "if": "greaterThan",
+                                        "equals": "0"
+                                    },
+                                    "color": "red"
+                                },
+                                {
+                                    "condition": {
+                                        "if": "equals",
+                                        "equals": "0"
+                                    },
+                                    "color": "green"
+                                }
+                            ]
+                        },
+                        "value": "Total Long IOs",
+                        "actions": null
+                    }
+                }
+            },
+            {
+                "id": "mssql-instance-xelmemory.insight",
+                "contrib": {
+                    "queryFile": "./out/sql/mssql-instance-xelmemory.sql",
+                    "type": {
+                        "line": {
+                            "dataDirection": "vertical",
+                            "dataType": "number",
+                            "legendPosition": "bottom",
+                            "labelFirstColumn": false,
+                            "columnsAsLabels": true
+                        }
+                    },
+                    "details": {
+                        "queryFile": "./out/sql/mssql-instance-xelmemory.sql",
+                        "label": {
+                            "icon": "database",
+                            "column": "Event Time",
+                            "state": [
+                                {
+                                    "condition": {
+                                        "if": "lessThan",
+                                        "equals": "4"
+                                    },
+                                    "color": "orange"
+                                },
+                                {
+                                    "condition": {
+                                        "if": "greaterThan",
+                                        "equals": "4"
+                                    },
+                                    "color": "green"
+                                }
+                            ]
+                        },
+                        "value": "Available Physical Memory (GB)",
+                        "actions": null
+                    }
+                }
+            },
+            {
+                "id": "mssql-instance-vlfs.insight",
+                "contrib": {
+                    "queryFile": "./out/sql/mssql-instance-vlfs.sql",
+                    "type": {
+                        "bar": {
+                            "dataDirection": "vertical",
+                            "dataType": "number",
+                            "legendPosition": "none",
+                            "labelFirstColumn": false,
+                            "columnsAsLabels": false
+                        }
+                    },
+                    "details": {
+                        "queryFile": "./out/sql/mssql-instance-vlfs-detail.sql",
+                        "label": {
+                            "icon": "database",
+                            "column": "DBName",
+                            "state": [
+                                {
+                                    "condition": {
+                                        "if": "greaterThanOrEquals",
+                                        "equals": "10000"
+                                    },
+                                    "color": "red"
+                                },
+                                {
+                                    "condition": {
+                                        "if": "greaterThanOrEquals",
+                                        "equals": "1000"
+                                    },
+                                    "color": "orange"
+                                },
+                                {
+                                    "condition": {
+                                        "if": "lessThan",
+                                        "equals": "1000"
+                                    },
+                                    "color": "green"
+                                }
+                            ]
+                        },
+                        "value": "TotalVLFs",
+                        "actions": null
+                    }
+                }
+            }
+        ],
+        "dashboard.containers": [
+            {
+                "id": "activity-container",
+                "container": {
+                    "widgets-container": [
+                        {
+                            "name": "XEL System Stats",
+                            "gridItemConfig": {
+                                "sizex": 2,
+                                "sizey": 2
+                            },
+                            "widget": {
+                                "mssql-instance-xelsystem.insight": {}
+                            }
+                        },
+                        {
+                            "name": "XEL IO Stats",
+                            "gridItemConfig": {
+                                "sizex": 2,
+                                "sizey": 2
+                            },
+                            "widget": {
+                                "mssql-instance-xelio.insight": {}
+                            }
+                        },
+                        {
+                            "name": "XEL Memory Stats",
+                            "gridItemConfig": {
+                                "sizex": 2,
+                                "sizey": 2
+                            },
+                            "widget": {
+                                "mssql-instance-xelmemory.insight": {}
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "health-container",
+                "container": {
+                    "widgets-container": [
+                        {
+                            "name": "Top 10 Waits",
+                            "gridItemConfig": {
+                                "sizex": 2,
+                                "sizey": 1
+                            },
+                            "widget": {
+                                "mssql-instance-waits.insight": {}
+                            }
+                        },
+                        {
+                            "name": "Virtual Log Files (VLFs)",
+                            "gridItemConfig": {
+                                "sizex": 2,
+                                "sizey": 1
+                            },
+                            "widget": {
+                                "mssql-instance-vlfs.insight": {}
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "scripts": {
+        "prepare": "node ./node_modules/sqlops/bin/install",
+        "build": "gulp build",
+        "compile": "gulp compile",
+        "watch": "gulp watch",
+        "postinstall": "node ./node_modules/vscode/bin/install"
+    },
+    "dependencies": {
+        "fs-extra": "^5.0.0",
+        "handlebars": "^4.0.11",
+        "openurl": "^1.1.1",
+        "sqlops": "github:anthonydresser/sqlops-extension-sqlops",
+        "vscode-nls": "2.0.2"
+    },
+    "devDependencies": {
+        "@types/fs-extra": "5.0.2",
+        "@types/handlebars": "^4.0.11",
+        "@types/mocha": "^2.2.42",
+        "@types/node": "^7.0.43",
+        "child-process-promise": "^2.2.1",
+        "del": "^3.0.0",
+        "gulp": "^4.0.0",
+        "gulp-color": "0.0.1",
+        "gulp-sourcemaps": "^2.6.4",
+        "gulp-tslint": "^8.1.3",
+        "gulp-typescript": "^3.2.4",
+        "should": "^13.2.1",
+        "temp-write": "^3.4.0",
+        "tslint": "^5.8.0",
+        "typemoq": "^2.1.0",
+        "typescript": "^2.6.1",
+        "vsce": "1.36.2",
+        "vscode": "^1.1.6"
+    }
+}
