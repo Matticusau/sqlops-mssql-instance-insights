@@ -25,13 +25,22 @@ DECLARE @qs datetime = GETDATE();
 -- Top 60 : for the last hour
 SELECT TOP(60)
     DATEADD(ms, -1 * (@ts_now - [timestamp]), @qs) AS [Snapshot Time],
+    100 - SystemIdle as [Total CPU Burden (%)],
+    COALESCE(CAST(
+        NULLIF(CONVERT(decimal(18, 4), 100.0 * UMT / (@processorGHz * 1000000 * 60 * @processors)),0.0)
+    as varchar(10)),'') as [SQL Server Userspace CPU Usage (%)],
+    COALESCE(CAST(
+        NULLIF(CONVERT(decimal(18, 4), 100.0 * KMT / (@processorGHz * 1000000 * 60 * @processors)),0.0)
+    as varchar(10)),'') as [SQL Server Kernel CPU Usage (%)],
     COALESCE(CAST(
         NULLIF(
             CONVERT(decimal(18, 4), 
                 100.0 * UMT / (@processorGHz * 1000000 * 60 * @processors) +
                 100.0 * KMT / (@processorGHz * 1000000 * 60 * @processors)),0.0)
-    as varchar(10)),'') as [SQL Server CPU (%)]
-    FROM ( 
+    as varchar(10)),'') as [Total CPU Usage by SQL Server (%)],
+    SPU as [SQL Processor Usage (% trunc)],
+    Mem as [Total System Physical Memory Used (%)]
+FROM ( 
     SELECT
         record.value('(./Record/@id)[1]', 'int') AS record_id, 
         record.value('(./Record/SchedulerMonitorEvent/SystemHealth/SystemIdle)[1]', 'int') AS [SystemIdle], 
@@ -51,3 +60,26 @@ SELECT TOP(60)
     ) AS x 
 ) AS y 
 ORDER BY record_id DESC;
+
+
+/* Alternative query to use  */
+
+
+DECLARE @ts_now bigint = (SELECT cpu_ticks/(cpu_ticks/ms_ticks) FROM sys.dm_os_sys_info WITH (NOLOCK)); 
+
+SELECT TOP(256) SQLProcessUtilization*100/(SQLProcessUtilization + SystemIdle) AS [SQL Server Process CPU Utilization], 
+                SystemIdle *100/(SQLProcessUtilization + SystemIdle) AS [System Idle Process], 
+                100 - (SystemIdle *100/(SQLProcessUtilization + SystemIdle)) - (SQLProcessUtilization*100/(SQLProcessUtilization + SystemIdle)) AS [Other Process CPU Utilization], 
+                DATEADD(ms, -1 * (@ts_now - [timestamp]), GETDATE()) AS [Event Time] 
+FROM (
+    SELECT record.value('(./Record/@id)[1]', 'int') AS record_id, 
+        record.value('(./Record/SchedulerMonitorEvent/SystemHealth/SystemIdle)[1]', 'int') AS [SystemIdle], 
+        record.value('(./Record/SchedulerMonitorEvent/SystemHealth/ProcessUtilization)[1]', 'int') AS [SQLProcessUtilization], [timestamp] 
+    FROM (
+        SELECT [timestamp], CONVERT(xml, record) AS [record] 
+        FROM sys.dm_os_ring_buffers WITH (NOLOCK)
+        WHERE ring_buffer_type = N'RING_BUFFER_SCHEDULER_MONITOR' 
+        AND record LIKE N'%<SystemHealth>%'
+    ) AS x
+) AS y 
+ORDER BY record_id DESC OPTION (RECOMPILE);

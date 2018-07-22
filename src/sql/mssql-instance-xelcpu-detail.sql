@@ -25,13 +25,22 @@ DECLARE @qs datetime = GETDATE();
 -- Top 60 : for the last hour
 SELECT TOP(60)
     DATEADD(ms, -1 * (@ts_now - [timestamp]), @qs) AS [Snapshot Time],
+    100 - SystemIdle as [Total CPU Burden (%)],
+    COALESCE(CAST(
+        NULLIF(CONVERT(decimal(18, 4), 100.0 * UMT / (@processorGHz * 1000000 * 60 * @processors)),0.0)
+    as varchar(10)),'') as [SQL Server Userspace CPU Usage (%)],
+    COALESCE(CAST(
+        NULLIF(CONVERT(decimal(18, 4), 100.0 * KMT / (@processorGHz * 1000000 * 60 * @processors)),0.0)
+    as varchar(10)),'') as [SQL Server Kernel CPU Usage (%)],
     COALESCE(CAST(
         NULLIF(
             CONVERT(decimal(18, 4), 
                 100.0 * UMT / (@processorGHz * 1000000 * 60 * @processors) +
                 100.0 * KMT / (@processorGHz * 1000000 * 60 * @processors)),0.0)
-    as varchar(10)),'') as [SQL Server CPU (%)]
-    FROM ( 
+    as varchar(10)),'') as [Total CPU Usage by SQL Server (%)],
+    SPU as [SQL Processor Usage (% trunc)],
+    Mem as [Total System Physical Memory Used (%)]
+FROM ( 
     SELECT
         record.value('(./Record/@id)[1]', 'int') AS record_id, 
         record.value('(./Record/SchedulerMonitorEvent/SystemHealth/SystemIdle)[1]', 'int') AS [SystemIdle], 
@@ -51,3 +60,4 @@ SELECT TOP(60)
     ) AS x 
 ) AS y 
 ORDER BY record_id DESC;
+
