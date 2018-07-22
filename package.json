@@ -27,8 +27,6 @@
         "Other"
     ],
     "activationEvents": [
-        "onCommand:extension.sayHello",
-        "onCommand:extension.showCurrentConnection",
         "*"
     ],
     "main": "./out/src/extension",
@@ -36,12 +34,20 @@
         "configuration": [],
         "commands": [
             {
-                "command": "extension.sayHello",
-                "title": "Hello World"
+                "command": "mssql-instance-insights.openVersionHealthCheck",
+                "title": "Life Cycle Web Site",
+                "icon": {
+                    "light": "./out/src/media/heartbeat-lightbg.svg",
+                    "dark": "./out/src/media/heartbeat-darkbg.svg"
+                }
             },
             {
-                "command": "extension.showCurrentConnection",
-                "title": "Show Current Connection"
+                "command": "mssql-instance-insights.runVersionHealthCheck",
+                "title": "Life Cycle Health Check",
+                "icon": {
+                    "light": "./out/src/media/heartbeat-lightbg.svg",
+                    "dark": "./out/src/media/heartbeat-darkbg.svg"
+                }
             }
         ],
         "views": {},
@@ -53,6 +59,17 @@
                 "description": "SQL Server Instance insights and widgets",
                 "container": {
                     "nav-section": [
+                        {
+                            "id": "overview-container",
+                            "title": "Instance Overview",
+                            "icon": {
+                                "light": "./out/src/media/list-lightbg.svg",
+                                "dark": "./out/src/media/list-darkbg.svg"
+                            },
+                            "container": {
+                                "overview-container": {}
+                            }
+                        },
                         {
                             "id": "activity-container",
                             "title": "Instance Activity",
@@ -83,7 +100,7 @@
             {
                 "id": "mssql-instance-waits.insight",
                 "contrib": {
-                    "queryFile": "./out/sql/mssql-instance-waits.sql",
+                    "queryFile": "./out/src/sql/mssql-instance-waits.sql",
                     "type": {
                         "horizontalBar": {
                             "dataDirection": "vertical",
@@ -94,7 +111,7 @@
                         }
                     },
                     "details": {
-                        "queryFile": "./out/sql/mssql-instance-waits-detail.sql",
+                        "queryFile": "./out/src/sql/mssql-instance-waits-detail.sql",
                         "label": {
                             "icon": "database",
                             "column": "WaitType",
@@ -130,7 +147,7 @@
             {
                 "id": "mssql-instance-xelsystem.insight",
                 "contrib": {
-                    "queryFile": "./out/sql/mssql-instance-xelsystem.sql",
+                    "queryFile": "./out/src/sql/mssql-instance-xelsystem.sql",
                     "type": {
                         "line": {
                             "dataDirection": "vertical",
@@ -141,7 +158,7 @@
                         }
                     },
                     "details": {
-                        "queryFile": "./out/sql/mssql-instance-xelsystem.sql",
+                        "queryFile": "./out/src/sql/mssql-instance-xelsystem.sql",
                         "label": {
                             "icon": "database",
                             "column": "Event Time",
@@ -168,9 +185,56 @@
                 }
             },
             {
+                "id": "mssql-instance-xecpu.insight",
+                "contrib": {
+                    "queryFile": "./out/src/sql/mssql-instance-xecpu.sql",
+                    "type": {
+                        "line": {
+                            "dataDirection": "vertical",
+                            "dataType": "number",
+                            "legendPosition": "none",
+                            "labelFirstColumn": false,
+                            "columnsAsLabels": true
+                        }
+                    },
+                    "details": {
+                        "queryFile": "./out/src/sql/mssql-instance-xecpu-detail.sql",
+                        "label": {
+                            "icon": "database",
+                            "column": "Event Time",
+                            "state": [
+                                {
+                                    "condition": {
+                                        "if": "greaterThanOrEquals",
+                                        "equals": "90"
+                                    },
+                                    "color": "red"
+                                },
+                                {
+                                    "condition": {
+                                        "if": "greaterThanOrEquals",
+                                        "equals": "50"
+                                    },
+                                    "color": "orange"
+                                },
+                                {
+                                    "condition": {
+                                        "if": "lessThan",
+                                        "equals": "50"
+                                    },
+                                    "color": "green"
+                                }
+                            ]
+                        },
+                        "value": "Total CPU Usage by SQL Server (%)",
+                        "actions": null
+                    }
+                }
+            },
+            {
                 "id": "mssql-instance-xelio.insight",
                 "contrib": {
-                    "queryFile": "./out/sql/mssql-instance-xelio.sql",
+                    "queryFile": "./out/src/sql/mssql-instance-xelio.sql",
                     "type": {
                         "line": {
                             "dataDirection": "vertical",
@@ -181,7 +245,7 @@
                         }
                     },
                     "details": {
-                        "queryFile": "./out/sql/mssql-instance-xelio.sql",
+                        "queryFile": "./out/src/sql/mssql-instance-xelio.sql",
                         "label": {
                             "icon": "database",
                             "column": "Event Time",
@@ -210,7 +274,7 @@
             {
                 "id": "mssql-instance-xelmemory.insight",
                 "contrib": {
-                    "queryFile": "./out/sql/mssql-instance-xelmemory.sql",
+                    "queryFile": "./out/src/sql/mssql-instance-xelmemory.sql",
                     "type": {
                         "line": {
                             "dataDirection": "vertical",
@@ -221,7 +285,7 @@
                         }
                     },
                     "details": {
-                        "queryFile": "./out/sql/mssql-instance-xelmemory.sql",
+                        "queryFile": "./out/src/sql/mssql-instance-xelmemory.sql",
                         "label": {
                             "icon": "database",
                             "column": "Event Time",
@@ -250,7 +314,7 @@
             {
                 "id": "mssql-instance-vlfs.insight",
                 "contrib": {
-                    "queryFile": "./out/sql/mssql-instance-vlfs.sql",
+                    "queryFile": "./out/src/sql/mssql-instance-vlfs.sql",
                     "type": {
                         "bar": {
                             "dataDirection": "vertical",
@@ -261,7 +325,7 @@
                         }
                     },
                     "details": {
-                        "queryFile": "./out/sql/mssql-instance-vlfs-detail.sql",
+                        "queryFile": "./out/src/sql/mssql-instance-vlfs-detail.sql",
                         "label": {
                             "icon": "database",
                             "column": "DBName",
@@ -297,6 +361,42 @@
         ],
         "dashboard.containers": [
             {
+                "id": "overview-container",
+                "container": {
+                    "widgets-container": [
+                        {
+                            "name": "Tasks",
+                            "widget": {
+                                "tasks-widget": [
+                                    "mssql-instance-insights.openVersionHealthCheck",
+                                    "mssql-instance-insights.runVersionHealthCheck"
+                                ]
+                            }
+                        },
+                        {
+                            "name": "Top 10 Waits",
+                            "gridItemConfig": {
+                                "sizex": 2,
+                                "sizey": 1
+                            },
+                            "widget": {
+                                "mssql-instance-waits.insight": {}
+                            }
+                        },
+                        {
+                            "name": "XEL CPU Stats",
+                            "gridItemConfig": {
+                                "sizex": 2,
+                                "sizey": 2
+                            },
+                            "widget": {
+                                "mssql-instance-xecpu.insight": {}
+                            }
+                        }
+                    ]
+                }
+            },
+            {
                 "id": "activity-container",
                 "container": {
                     "widgets-container": [
@@ -308,6 +408,16 @@
                             },
                             "widget": {
                                 "mssql-instance-xelsystem.insight": {}
+                            }
+                        },
+                        {
+                            "name": "XEL CPU Stats",
+                            "gridItemConfig": {
+                                "sizex": 2,
+                                "sizey": 2
+                            },
+                            "widget": {
+                                "mssql-instance-xecpu.insight": {}
                             }
                         },
                         {
@@ -370,9 +480,10 @@
         "postinstall": "node ./node_modules/vscode/bin/install"
     },
     "dependencies": {
+        "@types/opn": "^5.1.0",
         "fs-extra": "^5.0.0",
         "handlebars": "^4.0.11",
-        "openurl": "^1.1.1",
+        "opn": "^5.3.0",
         "sqlops": "github:anthonydresser/sqlops-extension-sqlops",
         "vscode-nls": "2.0.2"
     },

@@ -3,7 +3,9 @@
  *  Licensed under the Source EULA. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 'use strict';
-
+Object.defineProperty(exports, "__esModule", { value: true });
 // CONFIG VALUES ///////////////////////////////////////////////////////////
-export const extensionConfigSectionName = 'mssql-instance-insights';
-export const configLogDebugInfo = 'logDebugInfo';
+exports.extensionConfigSectionName = 'mssql-instance-insights';
+exports.configLogDebugInfo = 'logDebugInfo';
+
+//# sourceMappingURL=constants.js.map

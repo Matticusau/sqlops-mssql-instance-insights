@@ -17,8 +17,26 @@
             "request": "launch",
             "runtimeExecutable": "sqlops",
             "args": [
-                "--extensionDevelopmentPath=${workspaceFolder}\\src"
-            ]
+                "--extensionDevelopmentPath=${workspaceFolder}"
+            ],
+            "outFiles": [
+                "${workspaceFolder}/out/**/*.js"
+            ],
+            "preLaunchTask": "npm: watch"
+        },
+        {
+            "name": "Extension Tests",
+            "type": "sqlopsExtensionHost",
+            "request": "launch",
+            "runtimeExecutable": "sqlops",
+            "args": [
+                "--extensionDevelopmentPath=${workspaceFolder}",
+                "--extensionTestsPath=${workspaceFolder}/out/test"
+            ],
+            "outFiles": [
+                "${workspaceFolder}/out/test/**/*.js"
+            ],
+            "preLaunchTask": "npm: watch"
         }
     ]
 }
