@@ -44,12 +44,12 @@ class MainController extends controllerBase_1.default {
         //
         // register the tasks
         //
-        sqlops.tasks.registerTask('mssql-instance-insights.openVersionHealthCheck', (e) => this.openVersionHealthCheck(e.ownerUri));
+        sqlops.tasks.registerTask('mssql-instance-insights.openVersionHealthCheck', (e) => this.openVersionHealthCheckWebSite(e.ownerUri));
         //
         // register the commands
         //
         vscode.commands.registerCommand('mssql-instance-insights.openVersionHealthCheckCmd', (ownerUri) => {
-            this.openVersionHealthCheck(ownerUri);
+            this.openVersionHealthCheckWebSite(ownerUri);
         });
         vscode.commands.registerCommand('mssql-instance-insights.runVersionHealthCheck', () => {
             // TBA
@@ -62,19 +62,25 @@ class MainController extends controllerBase_1.default {
         // openurl.open(link);
         opn(link);
     }
-    openVersionHealthCheck(ownerUri) {
+    openVersionHealthCheckWebSite(ownerUri) {
+        return __awaiter(this, void 0, void 0, function* () {
+            this.openurl('https://sqlversions.azurewebsites.net/healthcheck');
+        });
+    }
+    openVersionHealthCheckWebSite2(ownerUri) {
         return __awaiter(this, void 0, void 0, function* () {
             console.log('this.openVersionHealthCheck => starting');
             let instanceData = new createInstanceData_1.CreateInstanceData(ownerUri);
-            let serverVersion = yield instanceData.getServerVersion();
-            console.log('serverVersion=' + JSON.stringify(serverVersion));
-            // let qryPdr = await InstanceUtils.getQueryProvider();
-            // // console.log('connSvc=' + JSON.stringify(connSvc));
-            // qryPdr.runQueryAndReturn()
-            // get the version number
-            // this.openurl('https://sqlversions.azurewebsites.net/healthcheck?version=');
-            this.openurl('https://sqlversions.azurewebsites.net/healthcheck');
-            console.log('this.openVersionHealthCheck => done');
+            yield instanceData.getServerVersion((serverVersion) => {
+                console.log('serverVersion=' + JSON.stringify(serverVersion));
+                // let qryPdr = await InstanceUtils.getQueryProvider();
+                // // console.log('connSvc=' + JSON.stringify(connSvc));
+                // qryPdr.runQueryAndReturn()
+                // get the version number
+                // this.openurl('https://sqlversions.azurewebsites.net/healthcheck?version=');
+                this.openurl('https://sqlversions.azurewebsites.net/healthcheck');
+                // console.log('this.openVersionHealthCheck => done');
+            });
         });
     }
 }

@@ -65,19 +65,23 @@ export default class MainController extends ControllerBase {
         opn(link);
     }
 
-
     private async openVersionHealthCheckWebSite(ownerUri: string) {
-        // console.log('this.openVersionHealthCheck => starting');
-        // let instanceData = new CreateInstanceData(ownerUri);
-        // let serverVersion = await instanceData.getServerVersion();
-        // console.log('serverVersion=' + JSON.stringify(serverVersion));
-        // let qryPdr = await InstanceUtils.getQueryProvider();
-        // // console.log('connSvc=' + JSON.stringify(connSvc));
-        // qryPdr.runQueryAndReturn()
-        // get the version number
-        // this.openurl('https://sqlversions.azurewebsites.net/healthcheck?version=');
         this.openurl('https://sqlversions.azurewebsites.net/healthcheck');
-        // console.log('this.openVersionHealthCheck => done');
+    }
+
+    private async openVersionHealthCheckWebSite2(ownerUri: string) {
+        console.log('this.openVersionHealthCheck => starting');
+        let instanceData = new CreateInstanceData(ownerUri);
+        await instanceData.getServerVersion( (serverVersion: any) => {
+            console.log('serverVersion=' + JSON.stringify(serverVersion));
+            // let qryPdr = await InstanceUtils.getQueryProvider();
+            // // console.log('connSvc=' + JSON.stringify(connSvc));
+            // qryPdr.runQueryAndReturn()
+            // get the version number
+            // this.openurl('https://sqlversions.azurewebsites.net/healthcheck?version=');
+            this.openurl('https://sqlversions.azurewebsites.net/healthcheck');
+            // console.log('this.openVersionHealthCheck => done');
+        });
     }
 }
 

@@ -25,11 +25,17 @@ export class CreateInstanceData {
         this.ownerUri = ownerUri;
 	}
 
-    public async getServerVersion() : Promise<any> {
+    public async getServerVersion(callback: any) : Promise<any> {
+        console.log('starting getServerVersion()');
         let queryService = await InstanceUtils.getQueryProvider();
-        queryService.runQueryAndReturn(this.ownerUri, 'SELECT @@VERSION').then( (result: any) => {
-            console.log("instanceData.get.result=" + JSON.stringify(result));
-            return '12.0.1234.0';
+        queryService.runQueryAndReturn(this.ownerUri, 'SELECT @@VERSION AS VersionText').then( (result: sqlops.SimpleExecuteResult) => {
+            // console.log("instanceData.get.result=" + JSON.stringify(result));
+            console.log('completed getServerVersion() TSQL');
+            callback('12.0.1234.0');
+        },
+        (error: any) => {
+            console.error('Error while running getServerVersion() TSQL');
+            callback('12.0.1234.0');
         });
     }
 }
