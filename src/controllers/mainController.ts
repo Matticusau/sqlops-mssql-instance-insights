@@ -19,6 +19,7 @@ import * as vscode from 'vscode';
 import * as sqlops from 'sqlops';
 import * as Utils from '../utils';
 import ControllerBase from './controllerBase';
+import { CreateInstanceData } from '../data/createInstanceData'; 
 import * as opn from 'opn';
 
 /**
@@ -41,13 +42,13 @@ export default class MainController extends ControllerBase {
         //
         // register the tasks
         //
-        sqlops.tasks.registerTask('mssql-instance-insights.openVersionHealthCheck', e => this.openurl('https://sqlversions.azurewebsites.net/healthcheck?version='));
+        sqlops.tasks.registerTask('mssql-instance-insights.openVersionHealthCheck', (e: any) => this.openVersionHealthCheckWebSite(e.ownerUri) );
 
         //
         // register the commands
         //
-        vscode.commands.registerCommand('mssql-instance-insights.openVersionHealthCheckCmd', () => {
-            this.openurl('https://sqlversions.azurewebsites.net/healthcheck?version=');
+        vscode.commands.registerCommand('mssql-instance-insights.openVersionHealthCheckCmd', (ownerUri: string) => {
+            this.openVersionHealthCheckWebSite(ownerUri);
         });
         vscode.commands.registerCommand('mssql-instance-insights.runVersionHealthCheck', () => {
             // TBA
@@ -62,6 +63,21 @@ export default class MainController extends ControllerBase {
     private openurl(link: string): void {
         // openurl.open(link);
         opn(link);
+    }
+
+
+    private async openVersionHealthCheckWebSite(ownerUri: string) {
+        // console.log('this.openVersionHealthCheck => starting');
+        // let instanceData = new CreateInstanceData(ownerUri);
+        // let serverVersion = await instanceData.getServerVersion();
+        // console.log('serverVersion=' + JSON.stringify(serverVersion));
+        // let qryPdr = await InstanceUtils.getQueryProvider();
+        // // console.log('connSvc=' + JSON.stringify(connSvc));
+        // qryPdr.runQueryAndReturn()
+        // get the version number
+        // this.openurl('https://sqlversions.azurewebsites.net/healthcheck?version=');
+        this.openurl('https://sqlversions.azurewebsites.net/healthcheck');
+        // console.log('this.openVersionHealthCheck => done');
     }
 }
 
