@@ -28,7 +28,8 @@ export class CreateInstanceData {
     public async getServerVersion(callback: any) : Promise<any> {
         console.log('starting getServerVersion()');
         let queryService = await InstanceUtils.getQueryProvider();
-        queryService.runQueryAndReturn(this.ownerUri, 'SELECT @@VERSION AS VersionText').then( (result: sqlops.SimpleExecuteResult) => {
+        //queryService.runQueryAndReturn(this.ownerUri, 'SELECT name FROM sys.databases').then( (result: sqlops.SimpleExecuteResult) => {
+        queryService.runQueryString(this.ownerUri, 'SELECT name FROM sys.databases').then( (result: sqlops.SimpleExecuteResult) => {
             // console.log("instanceData.get.result=" + JSON.stringify(result));
             console.log('completed getServerVersion() TSQL');
             callback('12.0.1234.0');

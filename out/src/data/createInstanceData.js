@@ -29,7 +29,8 @@ class CreateInstanceData {
         return __awaiter(this, void 0, void 0, function* () {
             console.log('starting getServerVersion()');
             let queryService = yield instanceUtils_1.InstanceUtils.getQueryProvider();
-            queryService.runQueryAndReturn(this.ownerUri, 'SELECT @@VERSION AS VersionText').then((result) => {
+            //queryService.runQueryAndReturn(this.ownerUri, 'SELECT name FROM sys.databases').then( (result: sqlops.SimpleExecuteResult) => {
+            queryService.runQueryString(this.ownerUri, 'SELECT name FROM sys.databases').then((result) => {
                 // console.log("instanceData.get.result=" + JSON.stringify(result));
                 console.log('completed getServerVersion() TSQL');
                 callback('12.0.1234.0');

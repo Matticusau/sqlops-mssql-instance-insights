@@ -7,6 +7,7 @@
 // ------------------------------------------------------------------------------------------
 // 02/07/2018   MLavery     Strictly set 'any' types to fix src\extension.ts(50,55): error TS7006: Parameter 'connection' implicitly has an 'any' type.
 // 22/07/2018   MLavery     Updated openurl to opn (https://github.com/sindresorhus/opn)
+// 25/07/2018   MLavery     Changed import to require for opn
 
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
@@ -20,7 +21,9 @@ import * as sqlops from 'sqlops';
 import * as Utils from '../utils';
 import ControllerBase from './controllerBase';
 import { CreateInstanceData } from '../data/createInstanceData'; 
-import * as opn from 'opn';
+// import * as opn from 'opn';
+
+const opn = require('opn');
 
 /**
  * The main controller class that initializes the extension

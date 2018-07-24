@@ -477,7 +477,7 @@
         "build": "gulp build",
         "compile": "gulp compile",
         "watch": "gulp watch",
-        "postinstall": "node ./node_modules/vscode/bin/install"
+        "postinstall": "node ./node_modules/vscode/bin/install && node ./node_modules/sqlops/bin/install"
     },
     "dependencies": {
         "@types/opn": "^5.1.0",
