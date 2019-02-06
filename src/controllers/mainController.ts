@@ -45,13 +45,13 @@ export default class MainController extends ControllerBase {
         //
         // register the tasks
         //
-        sqlops.tasks.registerTask('mssql-instance-insights.openVersionHealthCheck', (e: any) => this.openVersionHealthCheckWebSite(e.ownerUri) );
+        sqlops.tasks.registerTask('mssql-instance-insights.openVersionHealthCheck', (e: any) => this.openVersionHealthCheckWebSite2(e.ownerUri) );
 
         //
         // register the commands
         //
         vscode.commands.registerCommand('mssql-instance-insights.openVersionHealthCheckCmd', (ownerUri: string) => {
-            this.openVersionHealthCheckWebSite(ownerUri);
+            this.openVersionHealthCheckWebSite2(ownerUri);
         });
         vscode.commands.registerCommand('mssql-instance-insights.runVersionHealthCheck', () => {
             // TBA

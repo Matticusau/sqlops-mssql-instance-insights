@@ -7,6 +7,7 @@
 // ------------------------------------------------------------------------------------------
 // 02/07/2018   MLavery     Strictly set 'any' types to fix src\extension.ts(50,55): error TS7006: Parameter 'connection' implicitly has an 'any' type.
 // 22/07/2018   MLavery     Updated openurl to opn (https://github.com/sindresorhus/opn)
+// 25/07/2018   MLavery     Changed import to require for opn
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the Source EULA. See License.txt in the project root for license information.
@@ -26,7 +27,8 @@ const sqlops = require("sqlops");
 const Utils = require("../utils");
 const controllerBase_1 = require("./controllerBase");
 const createInstanceData_1 = require("../data/createInstanceData");
-const opn = require("opn");
+// import * as opn from 'opn';
+const opn = require('opn');
 /**
  * The main controller class that initializes the extension
  */
@@ -44,12 +46,12 @@ class MainController extends controllerBase_1.default {
         //
         // register the tasks
         //
-        sqlops.tasks.registerTask('mssql-instance-insights.openVersionHealthCheck', (e) => this.openVersionHealthCheckWebSite(e.ownerUri));
+        sqlops.tasks.registerTask('mssql-instance-insights.openVersionHealthCheck', (e) => this.openVersionHealthCheckWebSite2(e.ownerUri));
         //
         // register the commands
         //
         vscode.commands.registerCommand('mssql-instance-insights.openVersionHealthCheckCmd', (ownerUri) => {
-            this.openVersionHealthCheckWebSite(ownerUri);
+            this.openVersionHealthCheckWebSite2(ownerUri);
         });
         vscode.commands.registerCommand('mssql-instance-insights.runVersionHealthCheck', () => {
             // TBA

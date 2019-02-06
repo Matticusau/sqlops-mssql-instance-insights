@@ -50,15 +50,16 @@ gulp.task('compile:src', function(done) {
         .pipe(srcmap.init())
         .pipe(tsProject())
         .on('error', function() {
-            if(process.env.BUILDMACHINE) {
-                done('Failed to compile extension source, see above.');
+            if (process.env.BUILDMACHINE) {
+                done('Extension Tests failed to build. See Above.');
                 process.exit(1);
             }
         })
-        // TODO: Reinstate localization code
-        // .pipe(nls.rewriteLocalizeCalls())
-        // .pipe(nls.createAdditionalLanguageFiles(nls.coreLanguages, config.paths.project.root + '/localization/i18n', undefined, false))
-        .pipe(srcmap.write('.', { sourceRoot: function(file) { return file.cwd + '/src'; }}))
+        .pipe(srcmap.write('.', {
+            sourceRoot: function(file) { 
+                return file.cwd + '/src';
+            }
+        }))
         .pipe(gulp.dest('out/src/'));
 });
 
@@ -89,7 +90,7 @@ gulp.task("build", gulp.series("clean", "lint", "compile"));
 gulp.task("watch", function() {
     gulp.watch([config.paths.project.root + '/src/**/*',
                 config.paths.project.root + '/test/**/*.ts'],
-        gulp.series('build'))
+        gulp.series('build'));
 });
 
 gulp.task('test', (done) => {
@@ -115,4 +116,9 @@ gulp.task('test', (done) => {
         console.log(`stderr: ${stderr}`);
         done();
     });
+});
+
+gulp.task('copytypings', function() {
+    return gulp.src(config.paths.project.root + '/../../src/sql/sqlops.proposed.d.ts')
+    .pipe(gulp.dest('typings/'));
 });
